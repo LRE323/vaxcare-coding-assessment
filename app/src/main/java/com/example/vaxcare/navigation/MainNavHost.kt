@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vaxcare.ListViewModel
+import com.example.vaxcare.bookdetails.BookDetailsScreen
 import com.example.vaxcare.views.ListScreen
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,7 @@ fun MainNavHost() {
         startDestination = NavigationDestinations.LIST_SCREEN.name
     ) {
         hostBookListScreen(navHostController)
+        hostBookDetailsScreen()
     }
 }
 
@@ -34,7 +36,7 @@ private fun NavGraphBuilder.hostBookListScreen(navController: NavController) {
         LaunchedEffect(viewModel) {
             launch {
                 viewModel.detailsScreenNavigationTrigger.collect {
-                    // Nav logic here
+                    navController.navigate(route = NavigationDestinations.DETAILS_SCREEN.name)
                 }
             }
         }
@@ -43,5 +45,13 @@ private fun NavGraphBuilder.hostBookListScreen(navController: NavController) {
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onIntent = viewModel::onIntent
         )
+    }
+}
+
+private fun NavGraphBuilder.hostBookDetailsScreen() {
+    composable(
+        route = NavigationDestinations.DETAILS_SCREEN.name
+    ) {
+        BookDetailsScreen()
     }
 }
