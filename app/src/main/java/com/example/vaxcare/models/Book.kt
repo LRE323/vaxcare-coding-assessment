@@ -11,4 +11,3 @@ data class Book(
     val fee: Float,
     val lastEdited: String
 )
-
