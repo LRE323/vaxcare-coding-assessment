@@ -5,6 +5,5 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel
 class ListViewModel: ViewModel() {
-
     val title = "LIST SCREEN"
 }
