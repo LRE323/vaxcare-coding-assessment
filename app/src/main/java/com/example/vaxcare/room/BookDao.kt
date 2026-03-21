@@ -6,12 +6,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.vaxcare.models.Book
 import com.example.vaxcare.models.BookCacheMetadata
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BookDao {
     @Query("SELECT * FROM ${DatabaseConstants.BOOK_TABLE}")
-    fun getAllBooks(): Flow<List<Book>>
+    suspend fun getAllBooks(): List<Book>
 
     @Query("SELECT * FROM ${DatabaseConstants.BOOK_TABLE} WHERE id = :id")
     suspend fun getBookById(id: Int): Book?
