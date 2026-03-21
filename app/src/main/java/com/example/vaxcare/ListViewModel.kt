@@ -1,5 +1,6 @@
 package com.example.vaxcare
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vaxcare.models.Book
@@ -17,6 +18,16 @@ class ListViewModel @Inject constructor(
 
     init {
         fetchBooks()
+    }
+
+    fun processIntent(listScreenIntent: ListScreenIntent) {
+        when(listScreenIntent) {
+            is ListScreenIntent.OnBookSelected -> { onBookSelected(listScreenIntent.book) }
+        }
+    }
+
+    private fun onBookSelected(book: Book) {
+        Log.i("Luis", "Clicked on ${book.title}")
     }
 
     private fun fetchBooks() {
@@ -47,3 +58,7 @@ data class ListScreenUiState(
     val shouldShowLoading: Boolean = false,
     val bookList: List<Book>? = null
 )
+
+sealed interface ListScreenIntent {
+    data class OnBookSelected(val book: Book): ListScreenIntent
+}

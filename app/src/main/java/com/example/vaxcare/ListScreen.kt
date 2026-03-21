@@ -1,5 +1,6 @@
 package com.example.vaxcare
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.vaxcare.ListScreenIntent.OnBookSelected
 import com.example.vaxcare.models.Book
 
 @Composable
@@ -25,8 +27,10 @@ fun ListScreen(
         Column(
             modifier = Modifier.padding(it).padding(16.dp)
         ) {
-            uiState.bookList?.let { books ->
-                BookLazyColumn.List(books)
+            uiState.bookList?.let { bookList ->
+                BookLazyColumn.List(bookList) { selectedBook ->
+                    viewModel.processIntent(OnBookSelected(selectedBook))
+                }
             }
         }
     }
@@ -35,12 +39,37 @@ fun ListScreen(
 object BookLazyColumn {
 
     @Composable
-    private fun BookItem(book: Book) {
-        BookTitle(book)
-        Spacer(Modifier.height(8.dp))
-        BookAuthor(book)
-        Spacer(Modifier.height(8.dp))
-        BookStatus(book)
+    fun List(
+        bookList: List<Book>,
+        onClickBook: (Book) -> Unit
+    ) {
+        LazyColumn {
+            items(count = bookList.size) {
+                val currentBook = bookList[it]
+                BookItem(currentBook) {
+                    onClickBook(currentBook)
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun BookItem(
+        book: Book,
+        onClickBook: () -> Unit
+    ) {
+        Column(
+            Modifier.clickable{ onClickBook() }
+        ) {
+            Spacer(Modifier.height(16.dp))
+            BookTitle(book)
+            Spacer(Modifier.height(8.dp))
+            BookAuthor(book)
+            Spacer(Modifier.height(8.dp))
+            BookStatus(book)
+            Spacer(Modifier.height(16.dp))
+            HorizontalDivider()
+        }
     }
 
     @Composable
@@ -59,19 +88,5 @@ object BookLazyColumn {
     private fun BookAuthor(book: Book) {
         val text = stringResource(R.string.book_author_label, book.author)
         Text(text)
-    }
-
-    @Composable
-    fun List(
-        bookList: List<Book>
-    ) {
-        LazyColumn {
-            items(count = bookList.size) {
-                Spacer(Modifier.height(16.dp))
-                BookItem(bookList[it])
-                Spacer(Modifier.height(16.dp))
-                HorizontalDivider()
-            }
-        }
     }
 }
