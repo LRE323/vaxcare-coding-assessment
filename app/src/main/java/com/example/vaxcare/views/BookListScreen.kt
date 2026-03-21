@@ -20,7 +20,7 @@ import com.example.vaxcare.R
 import com.example.vaxcare.models.Book
 
 @Composable
-fun ListScreen(
+fun BookListScreen(
     uiState: ListScreenUiState,
     onIntent: (ListScreenIntent) -> Unit
 ) {

@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vaxcare.ListViewModel
 import com.example.vaxcare.bookdetails.BookDetailsScreen
-import com.example.vaxcare.views.ListScreen
+import com.example.vaxcare.views.BookListScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,7 +41,7 @@ private fun NavGraphBuilder.hostBookListScreen(navController: NavController) {
             }
         }
 
-        ListScreen(
+        BookListScreen(
             uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
             onIntent = viewModel::onIntent
         )
