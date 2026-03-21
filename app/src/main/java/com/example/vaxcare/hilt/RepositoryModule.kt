@@ -1,7 +1,7 @@
 package com.example.vaxcare.hilt
 
-import com.example.vaxcare.BookRepository
-import com.example.vaxcare.BookRepositoryImpl
+import com.example.vaxcare.repository.BookRepository
+import com.example.vaxcare.repository.BookRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

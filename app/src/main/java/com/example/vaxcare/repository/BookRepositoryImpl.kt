@@ -1,4 +1,4 @@
-package com.example.vaxcare
+package com.example.vaxcare.repository
 
 import com.example.vaxcare.models.Book
 import com.example.vaxcare.models.BookCacheMetadata
