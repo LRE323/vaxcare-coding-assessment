@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,12 +29,17 @@ fun BookListScreen(
             modifier = Modifier.padding(it).padding(16.dp)
         ) {
             uiState.bookList?.let { bookList ->
-                BookLazyColumn.List(bookList) { selectedBook ->
-                    onIntent(OnBookSelected(selectedBook))
+                PullToRefreshBox(
+                    isRefreshing = uiState.isRefreshing,
+                    onRefresh = { onIntent(ListScreenIntent.RefreshList) }
+                ) {
+                    BookLazyColumn.List(bookList) { selectedBook ->
+                        onIntent(OnBookSelected(selectedBook))
+                    }
                 }
             }
         }
-        CustomProgressIndicator(uiState.shouldShowLoading)
+        CustomProgressIndicator(uiState.shouldShowProgressIndicator)
     }
 }
 

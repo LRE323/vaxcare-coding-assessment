@@ -23,13 +23,24 @@ class ListViewModel @Inject constructor(
     val detailsScreenNavigationTrigger: SharedFlow<Book> get() = _detailsScreenNavigationTrigger
 
     init {
-        fetchBooks()
+        fetchBooks(this::handleProgressIndicator)
     }
 
     fun onIntent(listScreenIntent: ListScreenIntent) {
         when(listScreenIntent) {
             is ListScreenIntent.OnBookSelected -> { onBookSelected(listScreenIntent.book) }
+            ListScreenIntent.RefreshList -> { refreshList() }
         }
+    }
+
+    private fun handleIsRefreshing(isRefreshing: Boolean) {
+        uiState.update {
+            it.copy(isRefreshing = isRefreshing)
+        }
+    }
+
+    private fun refreshList() {
+        fetchBooks { handleIsRefreshing(it) }
     }
 
     private fun onBookSelected(book: Book) {
@@ -38,7 +49,9 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    private fun fetchBooks() {
+    private fun fetchBooks(
+        handleLoading: (Boolean) -> Unit
+    ) {
         viewModelScope.launch {
             handleLoading(true)
 
@@ -54,9 +67,9 @@ class ListViewModel @Inject constructor(
         }
     }
 
-    private fun handleLoading(shouldShowLoading: Boolean) {
+    private fun handleProgressIndicator(shouldShow: Boolean) {
         uiState.update {
-            it.copy(shouldShowLoading = shouldShowLoading)
+            it.copy(shouldShowProgressIndicator = shouldShow)
         }
     }
 
@@ -64,10 +77,12 @@ class ListViewModel @Inject constructor(
 
 data class ListScreenUiState(
     val screenTitle: String = "",
-    val shouldShowLoading: Boolean = false,
-    val bookList: List<Book>? = null
+    val shouldShowProgressIndicator: Boolean = false,
+    val bookList: List<Book>? = null,
+    val isRefreshing: Boolean = false
 )
 
 sealed interface ListScreenIntent {
     data class OnBookSelected(val book: Book): ListScreenIntent
+    data object RefreshList: ListScreenIntent
 }
