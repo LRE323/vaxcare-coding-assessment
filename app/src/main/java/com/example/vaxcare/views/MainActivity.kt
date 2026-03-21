@@ -1,4 +1,4 @@
-package com.example.vaxcare
+package com.example.vaxcare.views
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
