@@ -32,7 +32,11 @@ private fun NavGraphBuilder.hostBookListScreen(navController: NavController) {
         val viewModel: ListViewModel = hiltViewModel()
 
         LaunchedEffect(viewModel) {
-            launch { navController.navigate(route = "") }
+            launch {
+                viewModel.detailsScreenNavigationTrigger.collect {
+                    // Nav logic here
+                }
+            }
         }
 
         ListScreen(
