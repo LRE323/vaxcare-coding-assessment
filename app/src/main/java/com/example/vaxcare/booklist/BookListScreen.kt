@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.vaxcare.R
 import com.example.vaxcare.booklist.ListScreenIntent.OnBookSelected
 import com.example.vaxcare.models.Book
+import com.example.vaxcare.views.CustomProgressIndicator
 
 @Composable
 fun BookListScreen(
@@ -32,6 +33,7 @@ fun BookListScreen(
                 }
             }
         }
+        CustomProgressIndicator(uiState.shouldShowLoading)
     }
 }
 
