@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Vaxcare</string>
+    <string name="book_title_label">Title: %1$s</string>
+    <string name="book_display_text_label">Status: %1$s</string>
+    <string name="book_author_label">Author(s): %1$s</string>
 </resources>
