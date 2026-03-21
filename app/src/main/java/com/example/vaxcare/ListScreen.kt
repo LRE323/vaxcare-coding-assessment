@@ -7,14 +7,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @Composable
-fun ListScreen() {
+fun ListScreen(
+    viewModel: ListViewModel = hiltViewModel()
+) {
     Scaffold {
         Column(
             modifier = Modifier.padding(it).padding(16.dp)
         ) {
-            Text(text = "THIS IS THE LIST SCREEN")
+            Text(text = viewModel.title)
         }
     }
 }
