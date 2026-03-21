@@ -24,7 +24,7 @@ class ListViewModel @Inject constructor(
         fetchBooks()
     }
 
-    fun processIntent(listScreenIntent: ListScreenIntent) {
+    fun onIntent(listScreenIntent: ListScreenIntent) {
         when(listScreenIntent) {
             is ListScreenIntent.OnBookSelected -> { onBookSelected(listScreenIntent.book) }
         }

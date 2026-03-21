@@ -1,11 +1,17 @@
 package com.example.vaxcare.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vaxcare.ListScreen
+import com.example.vaxcare.ListViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainNavHost() {
@@ -15,14 +21,23 @@ fun MainNavHost() {
         navController = navHostController,
         startDestination = NavigationDestinations.LIST_SCREEN.name
     ) {
-        hostListScreen()
+        hostBookListScreen(navHostController)
     }
 }
 
-private fun NavGraphBuilder.hostListScreen() {
+private fun NavGraphBuilder.hostBookListScreen(navController: NavController) {
     composable(
         route = NavigationDestinations.LIST_SCREEN.name
     ) {
-        ListScreen()
+        val viewModel: ListViewModel = hiltViewModel()
+
+        LaunchedEffect(viewModel) {
+            launch { navController.navigate(route = "") }
+        }
+
+        ListScreen(
+            uiState = viewModel.uiState.collectAsStateWithLifecycle().value,
+            onIntent = viewModel::onIntent
+        )
     }
 }

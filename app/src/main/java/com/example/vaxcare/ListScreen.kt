@@ -13,15 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.vaxcare.ListScreenIntent.OnBookSelected
 import com.example.vaxcare.models.Book
 
 @Composable
 fun ListScreen(
-    viewModel: ListViewModel = hiltViewModel(),
-    uiState: ListScreenUiState = viewModel.uiState.collectAsStateWithLifecycle().value
+    uiState: ListScreenUiState,
+    onIntent: (ListScreenIntent) -> Unit
 ) {
     Scaffold {
         Column(
@@ -29,7 +27,7 @@ fun ListScreen(
         ) {
             uiState.bookList?.let { bookList ->
                 BookLazyColumn.List(bookList) { selectedBook ->
-                    viewModel.processIntent(OnBookSelected(selectedBook))
+                    onIntent(OnBookSelected(selectedBook))
                 }
             }
         }
