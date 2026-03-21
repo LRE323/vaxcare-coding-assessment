@@ -1,11 +1,12 @@
 package com.example.vaxcare
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vaxcare.models.Book
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -15,6 +16,9 @@ class ListViewModel @Inject constructor(
     private val bookRepository: BookRepository
 ) : ViewModel() {
     val uiState = MutableStateFlow(ListScreenUiState())
+
+    private val _detailsScreenNavigationTrigger = MutableSharedFlow<Book>()
+    val detailsScreenNavigationTrigger: SharedFlow<Book> get() = _detailsScreenNavigationTrigger
 
     init {
         fetchBooks()
@@ -27,7 +31,9 @@ class ListViewModel @Inject constructor(
     }
 
     private fun onBookSelected(book: Book) {
-        Log.i("Luis", "Clicked on ${book.title}")
+        viewModelScope.launch {
+            _detailsScreenNavigationTrigger.emit(book)
+        }
     }
 
     private fun fetchBooks() {
