@@ -19,8 +19,8 @@ class ListViewModel @Inject constructor(
 ) : ViewModel() {
     val uiState = MutableStateFlow(ListScreenUiState())
 
-    private val _detailsScreenNavigationTrigger = MutableSharedFlow<Book>()
-    val detailsScreenNavigationTrigger: SharedFlow<Book> get() = _detailsScreenNavigationTrigger
+    private val _detailsScreenNavigationTrigger = MutableSharedFlow<Int>()
+    val detailsScreenNavigationTrigger: SharedFlow<Int> get() = _detailsScreenNavigationTrigger
 
     init {
         fetchBooks(this::handleProgressIndicator)
@@ -28,7 +28,7 @@ class ListViewModel @Inject constructor(
 
     fun onIntent(listScreenIntent: ListScreenIntent) {
         when(listScreenIntent) {
-            is ListScreenIntent.OnBookSelected -> { onBookSelected(listScreenIntent.book) }
+            is ListScreenIntent.OnBookSelected -> { onBookSelected(listScreenIntent.bookId) }
             ListScreenIntent.RefreshList -> { refreshList() }
         }
     }
@@ -43,9 +43,9 @@ class ListViewModel @Inject constructor(
         fetchBooks { handleIsRefreshing(it) }
     }
 
-    private fun onBookSelected(book: Book) {
+    private fun onBookSelected(bookId: Int) {
         viewModelScope.launch {
-            _detailsScreenNavigationTrigger.emit(book)
+            _detailsScreenNavigationTrigger.emit(bookId)
         }
     }
 
@@ -83,6 +83,6 @@ data class ListScreenUiState(
 )
 
 sealed interface ListScreenIntent {
-    data class OnBookSelected(val book: Book): ListScreenIntent
+    data class OnBookSelected(val bookId: Int): ListScreenIntent
     data object RefreshList: ListScreenIntent
 }

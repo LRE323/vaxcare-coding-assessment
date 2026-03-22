@@ -6,10 +6,13 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.vaxcare.bookdetails.BookDetailsScreen
+import com.example.vaxcare.bookdetails.BookDetailsViewModel
 import com.example.vaxcare.booklist.BookListScreen
 import com.example.vaxcare.booklist.ListViewModel
 import kotlinx.coroutines.launch
@@ -36,7 +39,9 @@ private fun NavGraphBuilder.hostBookListScreen(navController: NavController) {
         LaunchedEffect(viewModel) {
             launch {
                 viewModel.detailsScreenNavigationTrigger.collect {
-                    navController.navigate(route = NavigationDestinations.DETAILS_SCREEN.name)
+                    navController.navigate(
+                        route = "${NavigationDestinations.DETAILS_SCREEN.name}/$it"
+                    )
                 }
             }
         }
@@ -50,8 +55,10 @@ private fun NavGraphBuilder.hostBookListScreen(navController: NavController) {
 
 private fun NavGraphBuilder.hostBookDetailsScreen() {
     composable(
-        route = NavigationDestinations.DETAILS_SCREEN.name
+        route = "${NavigationDestinations.DETAILS_SCREEN.name}/{bookId}",
+        arguments = listOf(navArgument("bookId") { type = NavType.IntType })
     ) {
+        val viewModel: BookDetailsViewModel = hiltViewModel()
         BookDetailsScreen()
     }
 }

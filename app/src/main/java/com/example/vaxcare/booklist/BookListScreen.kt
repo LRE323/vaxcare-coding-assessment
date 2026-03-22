@@ -34,7 +34,7 @@ fun BookListScreen(
                     onRefresh = { onIntent(ListScreenIntent.RefreshList) }
                 ) {
                     BookLazyColumn.List(bookList) { selectedBook ->
-                        onIntent(OnBookSelected(selectedBook))
+                        onIntent(OnBookSelected(selectedBook.id))
                     }
                 }
             }
