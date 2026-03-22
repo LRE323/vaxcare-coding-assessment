@@ -23,6 +23,10 @@ class BookRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun findBook(id: Int): Book? {
+        return bookDao.getBookById(id)
+    }
+
     @Throws(Exception::class)
     private suspend fun fetchBookListFromApi(): List<Book> {
         return try {
