@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.vaxcare.models.Book
 import com.example.vaxcare.repository.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -53,6 +54,8 @@ class ListViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             handleLoading(true)
+
+            delay(1500) // Adding delay to make the API call seem more natural
 
             uiState.update {
                 it.copy(
