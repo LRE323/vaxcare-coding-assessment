@@ -3,4 +3,10 @@
     <string name="book_title_label">Title: %1$s</string>
     <string name="book_display_text_label">Status: %1$s</string>
     <string name="book_author_label">Author(s): %1$s</string>
+    <string name="time_checked_in_label">Time checked in: %1$s</string>
+    <string name="time_checked_out_label">Time checked out: %1$s</string>
+    <string name="due_date_label">Due date: %1$s</string>
+    <string name="fee_label">Fee: %1$s</string>
+    <string name="last_edited_label">Last edited: %1$s</string>
+    <string name="book_detail_load_failed_error">Unable to show book information.</string>
 </resources>
