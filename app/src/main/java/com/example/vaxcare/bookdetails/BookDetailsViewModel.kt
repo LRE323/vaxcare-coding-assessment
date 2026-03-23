@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vaxcare.models.Book
 import com.example.vaxcare.repository.BookRepository
-import com.example.vaxcare.toDisplayableBookTime
+import com.example.vaxcare.utils.toDisplayableBookTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

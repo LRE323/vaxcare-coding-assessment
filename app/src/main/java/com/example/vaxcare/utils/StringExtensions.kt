@@ -1,4 +1,4 @@
-package com.example.vaxcare
+package com.example.vaxcare.utils
 
 import java.time.Instant
 import java.time.LocalDateTime
