@@ -59,6 +59,6 @@ private fun NavGraphBuilder.hostBookDetailsScreen() {
         arguments = listOf(navArgument("bookId") { type = NavType.IntType })
     ) {
         val viewModel: BookDetailsViewModel = hiltViewModel()
-        BookDetailsScreen()
+        BookDetailsScreen(viewModel.uiState.collectAsStateWithLifecycle().value)
     }
 }
