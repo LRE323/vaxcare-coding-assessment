@@ -19,6 +19,7 @@ class MainActivity: ComponentActivity() {
             )
         )
         setContent {
+            // TODO: Create a theme
             MainNavHost()
         }
     }
