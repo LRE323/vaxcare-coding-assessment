@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.vaxcare.models.Book
 import com.example.vaxcare.repository.BookRepository
 import com.example.vaxcare.utils.toDisplayableBookTime
+import com.example.vaxcare.utils.toDollarFormat
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -48,7 +49,7 @@ class BookDetailsViewModel @Inject constructor(
                 timeCheckedIn = book.status.timeCheckedIn?.toDisplayableBookTime(),
                 timeCheckedOut = book.status.timeCheckedOut?.toDisplayableBookTime(),
                 dueDate = book.status.dueDate?.toDisplayableBookTime(),
-                fee = book.fee.toString(),
+                fee = book.fee.toDollarFormat(),
                 lastEdited = book.lastEdited.toDisplayableBookTime()
             )
         }
