@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.vaxcare.models.Book
 import com.example.vaxcare.repository.BookRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -54,8 +53,6 @@ class ListViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             handleLoading(true)
-
-            delay(1000) // adding delay demo loading indicator
 
             uiState.update {
                 it.copy(
