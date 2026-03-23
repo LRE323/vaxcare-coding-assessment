@@ -59,7 +59,7 @@ class ListViewModel @Inject constructor(
 
             uiState.update {
                 it.copy(
-                    bookList = bookRepository.fetchBookList()
+                    bookList = bookRepository.fetchBookList() // TODO: Handle exception
                 )
             }
 
